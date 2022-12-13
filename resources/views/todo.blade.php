@@ -1,32 +1,21 @@
-@extends('layouts.master')
-@section('title', 'Todo App')
-@section('content')
-     <style>
-          th{
-               color: white;
-          }
-          .filter{
-               justify-content: center;
-               display: flex;
-          }
-          .filter .div{
-               padding-inline: 10px;
-          }
-          .div{
-               margin-right: 15px;
-          }
+<x-app-layout>
+     <x-slot name="header">
+         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+             {{ __('Todo List') }}
+         </h2>
+ 
+     </x-slot>
 
-     </style>
-
-          
-     <div style="margin-top:3em;">
+     <div style="">
+          @if(Session::has('message'))
+               <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{Session::get('message')}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+          @endif
           <div class="mt-4">
                <div class="col-md-3"></div>
                <div class="">
-                    <div style="text-align: center;" class="row">
-                         <h2 class="text-primary">To Do List</h2>
-                    </div>
-                    <hr style="border-top: 2px solid black;"/>
                     <div class="d-flex mb-3">
                          <div class="div">
                               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Create Task</button>
@@ -41,9 +30,9 @@
                                        Task Filter
                                    </button>
                                    <ul class="dropdown-menu">
-                                   <li><a class="dropdown-item" href="/home/todo">All</a></li>
-                                   <li><a class="dropdown-item" href="/home/todo/done">Done</a></li>
-                                   <li><a class="dropdown-item" href="/home/todo/pending">Pending</a></li>
+                                        <li><a class="dropdown-item" href="/home/todo">All</a></li>
+                                        <li><a class="dropdown-item" href="/home/todo/done">Done</a></li>
+                                        <li><a class="dropdown-item" href="/home/todo/pending">Pending</a></li>
                                    </ul>
                                </div>
                          </div>
@@ -95,8 +84,9 @@
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                    <form action="/home/todo/create" method="post" class="">
+                    <form action="/todo/create" method="POST" class="">
                          @csrf
+                         @method('POST')
                     <div class="row">
                          <!-- h -->
                          <div class="">
@@ -124,4 +114,4 @@
      
           
      </div>
-@endsection
+</x-app-layout>

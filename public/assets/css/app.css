@@ -1,0 +1,11 @@
+
+.filter{
+     justify-content: center;
+     display: flex;
+}
+.filter .div{
+     padding-inline: 10px;
+}
+.div{
+     margin-right: 15px;
+}

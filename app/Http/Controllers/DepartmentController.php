@@ -38,10 +38,18 @@ class DepartmentController extends Controller
      */
     public function store(Request $re)
     {
-        $dep=$re->only(['name','description']);
-        if(DB::table('departments')->insert($dep));
-            return redirect('departments');
-            
+        $re->validate([
+            'name'=>'required|min:3|max:100',
+            'description'=>'required|max:200'
+        ]);
+
+        $dep=new department();
+        $dep->name=$re->name;
+        $dep->description=$re->description;
+        if($dep->save()){
+            return redirect('departments')
+            ->with('message','One record created successfully!');
+        }
     }
 
     /**
@@ -90,6 +98,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(department::where('id',$id)->delete()){
+            return redirect('departments')->with('message','One record deleted successfully!');
+        }
+        return back();
     }
 }
